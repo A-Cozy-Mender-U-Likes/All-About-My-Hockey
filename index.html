@@ -150,4 +150,304 @@
 
     <script src="pong.js"></script>
 </body>
-</html>
+</html> 
+
+
+
+/project
+  /images
+    - image1.jpg
+    - image2.jpg
+    - image3.jpg
+  /scripts
+    - script.js
+    - pong.js
+  - index.html
+  - styles.css 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Personal Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Personal Website Section -->
+<header>
+    <h1>Your Name</h1>
+    <p>Welcome to my personal website</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+    <a href="#slideshow">Image Slideshow</a>
+    <a href="#pong-game">Pong Game</a>
+</nav>
+
+<div class="container">
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Write a short introduction about yourself here.</p>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p>Showcase your work, projects, or accomplishments here.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Provide your contact information or a contact form here.</p>
+    </section>
+
+    <!-- Image Slideshow Section -->
+    <section id="slideshow">
+        <h2>Image Slideshow</h2>
+        <div class="slideshow-container">
+            <div class="slide fade">
+                <img src="images/image1.jpg" alt="Image 1">
+            </div>
+            <div class="slide fade">
+                <img src="images/image2.jpg" alt="Image 2">
+            </div>
+            <div class="slide fade">
+                <img src="images/image3.jpg" alt="Image 3">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pong Game Section -->
+    <section id="pong-game">
+        <h2>JavaScript Pong Game</h2>
+        <canvas id="pong" width="800" height="400"></canvas>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2025 Your Name. All rights reserved.</p>
+</footer>
+
+<script src="scripts/script.js"></script>
+<script src="scripts/pong.js"></script>
+
+</body>
+</html> 
+
+
+
+
+
+
+
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+}
+
+nav a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Slideshow Styles */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+}
+
+.slide {
+    display: none;
+}
+
+.fade {
+    animation: fade 1.5s infinite;
+}
+
+@keyframes fade {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Pong Game Styles */
+canvas {
+    border: 2px solid white;
+    display: block;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+} 
+
+
+
+
+
+let slideIndex = 0;
+
+function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+        slideIndex = 1;
+    }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+
+showSlides();
+Pong Game JavaScript (scripts/pong.js):
+javascript
+Copy
+const canvas = document.getElementById("pong");
+const ctx = canvas.getContext("2d");
+
+// Create the pong paddle and ball
+const paddleWidth = 10, paddleHeight = 100, ballSize = 10;
+let leftPaddleY = canvas.height / 2 - paddleHeight / 2, rightPaddleY = canvas.height / 2 - paddleHeight / 2;
+let ballX = canvas.width / 2, ballY = canvas.height / 2;
+let ballSpeedX = 2, ballSpeedY = 2;
+let leftPaddleSpeed = 0, rightPaddleSpeed = 0;
+
+// Draw everything on the canvas
+function draw() {
+    // Draw background
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw paddles
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, leftPaddleY, paddleWidth, paddleHeight); // Left paddle
+    ctx.fillRect(canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight); // Right paddle
+
+    // Draw ball
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballSize, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+// Update game objects
+function update() {
+    // Move paddles
+    leftPaddleY += leftPaddleSpeed;
+    rightPaddleY += rightPaddleSpeed;
+
+    // Keep paddles within the canvas
+    leftPaddleY = Math.max(0, Math.min(canvas.height - paddleHeight, leftPaddleY));
+    rightPaddleY = Math.max(0, Math.min(canvas.height - paddleHeight, rightPaddleY));
+
+    // Move ball
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+
+    // Ball collision with top and bottom walls
+    if (ballY <= 0 || ballY >= canvas.height) {
+        ballSpeedY = -ballSpeedY;
+    }
+
+    // Ball collision with paddles
+    if (ballX <= paddleWidth && ballY >= leftPaddleY && ballY <= leftPaddleY + paddleHeight) {
+        ballSpeedX = -ballSpeedX;
+    }
+
+    if (ballX >= canvas.width - paddleWidth && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight) {
+        ballSpeedX = -ballSpeedX;
+    }
+
+    // Reset ball if it goes out of bounds
+    if (ballX <= 0 || ballX >= canvas.width) {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballSpeedX = -ballSpeedX;
+    }
+}
+
+// Control paddles
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp") {
+        rightPaddleSpeed = -5;
+    }
+    if (e.key === "ArrowDown") {
+        rightPaddleSpeed = 5;
+    }
+    if (e.key === "w") {
+        leftPaddleSpeed = -5;
+    }
+    if (e.key === "s") {
+        leftPaddleSpeed = 5;
+    }
+});
+
+document.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        rightPaddleSpeed = 0;
+    }
+    if (e.key === "w" || e.key === "s") {
+        leftPaddleSpeed = 0;
+    }
+});
+
+// Game loop
+function gameLoop() {
+    draw();
+    update();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop(); 
+
+
+
+
+        
